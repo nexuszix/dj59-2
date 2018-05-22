@@ -1,0 +1,43 @@
+{% extends 'viewer/base.html' %}
+
+{% block navbar %}
+<li class="active"><a href="#">Main</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Projects</a></li>
+<li><a href="#">Contact</a></li>
+{% endblock %}
+
+{% block sidebar %}
+<ul class="nav nav-pills nav-stacked">
+  <li><a href="{% url 'main' %}">Home</a></li>
+  <li class="active"><a href="#">Upload</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+
+
+		<form method="POST" class="form-inline post-form" action="{% url 'upload' %}">
+			<div class="form-group col-md-10">
+				{% csrf_token %}{{ form }}
+				<button class="btn btn-default" type="submit">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</div>
+			<div class="col-md-4">
+
+			</div>
+		</form>
+
+
+<script>
+  $(document).ready( function() {
+    $( ".date1" ).datepicker({
+  dateFormat: "yy-mm-dd"
+});
+  } );
+</script>
+
+{% endblock %}

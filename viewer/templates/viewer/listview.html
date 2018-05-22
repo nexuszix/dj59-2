@@ -1,0 +1,72 @@
+{% extends 'viewer/base.html' %}
+
+{% block navbar %}
+<li class="active"><a href="#">Main</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Projects</a></li>
+<li><a href="#">Contact</a></li>
+{% endblock %}
+
+{% block sidebar %}
+<ul class="nav nav-pills nav-stacked">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="{% url 'upload' %}">Upload</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+     <h2>Latest update</h2>
+     <p>{{ latest.latest }}</p> 
+     <div class="table-responsive">{{url}}
+      <table class="table table-hover">
+       <thead>
+        <tr>
+         <th>Stock Code</th>
+         <th>Fullname</th>
+         <th>Relationship</th>
+         <th>Type of Stock</th>
+         <th>Document Date</th>
+         <th>Received Date</th>
+         <th>Amount</th>
+         <th>Price per Stock</th>
+         <th>Method</th>
+         <th>Remark</th>
+        </tr>
+      </thead>
+     {% for post in posts %}
+      <tr>
+        <td>{{ post.stock_abbr }}</td>
+        <td>{{ post.director }}</td>
+        <td>{{ post.relationship }}</td>
+        <td>{{ post.stock_type }}</td>
+        <td>{{ post.doc_date }}</td>
+        <td>{{ post.received_date }}</td>
+        <td>{{ post.amount }}</td>
+        <td>{{ post.price }}</td>
+        <td>{{ post.transaction_type }}</td>
+        <td>{{ post.remark }}</td>
+      </tr>
+
+    {% endfor %}
+      </table>
+     </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Some content in menu 1.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Some content in menu 2.</p>
+    </div>
+  </div>
+{% endblock %}
