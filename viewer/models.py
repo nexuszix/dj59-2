@@ -6,10 +6,13 @@ class MasterStock(models.Model):
 	stock_abbr = models.CharField(max_length=8, primary_key=True)
 	name = models.CharField(max_length=128)
 	
+	def __unicode__(self):
+		return self.stock_abbr
+	
 class RawData(models.Model):
 	stock_abbr = models.ForeignKey(MasterStock, on_delete=models.CASCADE)
 	director = models.CharField(max_length=64, blank=True, null=True)
-	relationship = models.CharField(max_length=20, blank=True, null=True)
+	relationship = models.CharField(max_length=100, blank=True, null=True)
 	stock_type = models.CharField(max_length=64)
 	doc_date = models.DateField()
 	received_date = models.DateField()

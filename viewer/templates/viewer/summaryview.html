@@ -34,17 +34,17 @@
        <thead>
         <tr>
          <th>Stock Code</th>
-         <th>Value</th>
-         <th>Last Cost</th>
-         <th>Average Cost</th>
+         <th align="right">Value</th>
+         <th align="right">Last Cost</th>
+         <th align="right">Average Cost</th>
         </tr>
       </thead>
      {% for post in posts %}
       <tr>
         <td>{{ post.stock_abbr }}</td>
-        <td>{{ post.value }}</td>
-        <td>{{ post.last_cost }}</td>
-        <td>{{ post.avg_cost }}</td>
+        <td align="right">{{ post.value }}</td>
+        <td align="right">{{ post.last_cost }}</td>
+        <td align="right">{{ post.avg_cost }}</td>
       </tr>
 
     {% endfor %}

@@ -14,7 +14,33 @@ def render_list(request):
 	return render(request, 'viewer/listview.html', {'posts': posts})
 	
 def summary_list(request):
-	return render(request, 'viewer/summaryview.html', {'posts': posts, 'latest':latest.latest, 'days': days})
+	masters = MasterStock.objects.all()
+	posts = []
+	days = request.POST.get("days",90)
+	latest = Update.objects.all()[0].latest
+	for stock in masters:
+		post = {}
+		post['stock_abbr'] = stock.stock_abbr
+		post['value'] = 0
+		volumn = 0
+		n = 0
+		latest_price = 0
+		datas = RawData.objects.filter(stock_abbr__stock_abbr=stock.stock_abbr, received_date__gte=date.today()-timedelta(days=days))
+		for data in datas:
+			volumn += data.amount
+			n += 1
+			latest_price = data.price
+			if data.transaction_type == "ซื้อ":
+				post['value'] += data.amount * data.price
+			elif data.transaction_type == "ขาย":
+				post['value'] -= data.amount * data.price
+		post['last_cost'] = latest_price
+		post['value'] = round(post['value'], 0)
+		if volumn > 0:
+			post['avg_cost'] = round(post['value']/volumn, 2)
+		posts.append(post.copy())
+	posts = sorted(posts, key=lambda k: k['value'], reverse=True) 
+	return render(request, 'viewer/summaryview.html', {'posts': posts, 'latest':latest, 'days': days})
 
 def upload(request):
 	if request.method == "POST":
@@ -50,6 +76,10 @@ def upload(request):
 		r = requests.get("http://127.0.0.1:1880/load", params=data)
 		posts = json.loads(r.text)
 		for post in posts:
+			if post['transaction_type'] not in ["ซื้อ", "ขาย"]: continue
+			if post['price'] == "-": continue
+			if len(post['relationship']) > 100: post['relationship']=post['relationship'][:100]
+			if len(post['stock_type'])>64: post['stock_type']=post['stock_type'][:64]
 			post['doc_date'] = date_convert(post['doc_date'])
 			post['received_date'] = date_convert(post['received_date'])
 			post['amount'] = Decimal(post['amount'].replace(',',''))

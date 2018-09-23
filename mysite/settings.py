@@ -25,7 +25,7 @@ SECRET_KEY = 'cl9j%pd8_&6-jdu0c6kknx(gx^@wt$=e15m1fue-acxt(%v+s('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'lenovo', '*']
 
 
 # Application definition
@@ -129,3 +129,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240 # higher than the count of fields

@@ -16,9 +16,9 @@ class RawResource(resources.ModelResource):
 @admin.register(RawData)
 class RawAdmin(ImportExportModelAdmin):
 	resource_class = RawResource
-	list_display = ('stock_abbr', 'stock_type', 'received_date', 'amount', 'price', 'transaction_type',)
+	list_display = ('stock_abbr', 'director', 'stock_type', 'received_date', 'amount', 'price', 'transaction_type',)
 # # 	list_filter = ('province',)
-	search_fields = ['stock_abbr']
+	search_fields = ['stock_abbr__stock_abbr']
 
 class UpdateResource(resources.ModelResource):
 	class Meta:
