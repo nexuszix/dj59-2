@@ -1,0 +1,8 @@
+django==2.1.1
+django-import-export
+setuptools
+requests
+wheel
+mysqlclient --only-binary :all:
+
+

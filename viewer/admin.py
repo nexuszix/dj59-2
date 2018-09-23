@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RawData, Update
+from .models import RawData, Update, MasterStock
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 
@@ -30,5 +30,17 @@ class UpdateAdmin(ImportExportModelAdmin):
 	list_display = ('latest',)
 # # 	list_filter = ('province',)
 	search_fields = ['latest']		
+	
+class MasterResource(resources.ModelResource):
+	class Meta:
+		model = MasterStock
+
+@admin.register(MasterStock)
+class MasterAdmin(ImportExportModelAdmin):
+	resource_class = MasterResource
+	list_display = ('stock_abbr', 'name')
+# # 	list_filter = ('province',)
+	search_fields = ['stock_abbr', 'name']		
+
 
 admin.site.site_header = "59-2 Administration System"

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import RawData, Update
+from .models import RawData, Update, MasterStock
 from .forms import SearchDateForm
 import json, requests
 from decimal import Decimal
@@ -12,6 +12,9 @@ def main(request):
 def render_list(request):
 	posts = RawData.objects.all()
 	return render(request, 'viewer/listview.html', {'posts': posts})
+	
+def summary_list(request):
+	return render(request, 'viewer/summaryview.html', {'posts': posts, 'latest':latest.latest, 'days': days})
 
 def upload(request):
 	if request.method == "POST":
@@ -51,6 +54,15 @@ def upload(request):
 			post['received_date'] = date_convert(post['received_date'])
 			post['amount'] = Decimal(post['amount'].replace(',',''))
 			post['price'] = Decimal(post['price'].replace(',',''))
+			company = post.pop('company')
+			stock_master = MasterStock.objects.filter(stock_abbr=post['stock_abbr'])
+			if not stock_master:
+				stock_master = MasterStock(stock_abbr=post['stock_abbr'], name=company)
+				stock_master.save()
+			else:
+				stock_master = stock_master[0]
+			post['stock_abbr'] = stock_master
+			
 			row = RawData(**post)
 			row.save()
 		latest = Update.objects.all()[0]
