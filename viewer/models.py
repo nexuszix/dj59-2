@@ -15,14 +15,13 @@ class RawData(models.Model):
 	relationship = models.CharField(max_length=100, blank=True, null=True)
 	stock_type = models.CharField(max_length=64)
 	doc_date = models.DateField()
-	received_date = models.DateField()
 	amount = models.DecimalField(max_digits=20, decimal_places=2)
 	price = models.DecimalField(max_digits=10, decimal_places=2)
 	transaction_type = models.CharField(max_length=64)
 	remark = models.CharField(max_length=256, blank=True, null=True)
 
 	class Meta:
-		ordering = ["received_date"]
+		ordering = ["doc_date"]
 
 	def __unicode__(self):
 		return self.stock_abbr + " " + self.transaction_type + amount

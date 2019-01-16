@@ -25,7 +25,7 @@ def summary_list(request):
 		volumn = 0
 		n = 0
 		latest_price = 0
-		datas = RawData.objects.filter(stock_abbr__stock_abbr=stock.stock_abbr, received_date__gte=date.today()-timedelta(days=days))
+		datas = RawData.objects.filter(stock_abbr__stock_abbr=stock.stock_abbr, doc_date__gte=date.today()-timedelta(days=days))
 		for data in datas:
 			volumn += data.amount
 			n += 1
@@ -81,7 +81,6 @@ def upload(request):
 			if len(post['relationship']) > 100: post['relationship']=post['relationship'][:100]
 			if len(post['stock_type'])>64: post['stock_type']=post['stock_type'][:64]
 			post['doc_date'] = date_convert(post['doc_date'])
-			post['received_date'] = date_convert(post['received_date'])
 			post['amount'] = Decimal(post['amount'].replace(',',''))
 			post['price'] = Decimal(post['price'].replace(',',''))
 			company = post.pop('company')

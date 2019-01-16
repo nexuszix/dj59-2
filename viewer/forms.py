@@ -6,11 +6,10 @@ class DateForm(forms.ModelForm):
 
     class Meta:
         model = RawData
-        fields = ('doc_date', 'received_date' )
+        fields = ('doc_date', )
 
         widgets = {
             'doc_date': forms.DateInput(attrs={'class':'form-control date1', 'placeholder':'Search...',}),
-            'received_date': forms.DateInput(attrs={'class':'form-control date1', 'placeholder':'Search...',}),
         }
 
 class SearchDateForm(forms.Form):
