@@ -1,4 +1,5 @@
 {% extends 'viewer/base.html' %}
+{% load humanize %}
 
 {% block navbar %}
 <li class="active"><a href="#">Main</a></li>
@@ -42,7 +43,7 @@
      {% for post in posts %}
       <tr>
         <td>{{ post.stock_abbr }}</td>
-        <td align="right">{{ post.value }}</td>
+        <td align="right">{{ post.value|intcomma }}</td>
         <td align="right">{{ post.last_cost }}</td>
         <td align="right">{{ post.avg_cost }}</td>
       </tr>

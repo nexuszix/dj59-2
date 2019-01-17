@@ -34,3 +34,17 @@ class Update(models.Model):
 
 	def __unicode__(self):
 		return self.latest
+
+class UploadErrorLog(models.Model):
+	stock_abbr = models.CharField(max_length=256, blank=True, null=True)
+	director = models.CharField(max_length=256, blank=True, null=True)
+	relationship = models.CharField(max_length=256, blank=True, null=True)
+	stock_type = models.CharField(max_length=256, blank=True, null=True)
+	doc_date = models.CharField(max_length=256, blank=True, null=True)
+	amount = models.CharField(max_length=256, blank=True, null=True)
+	price = models.CharField(max_length=256, blank=True, null=True)
+	transaction_type = models.CharField(max_length=256, blank=True, null=True)
+	remark = models.CharField(max_length=256, blank=True, null=True)
+
+	def __unicode__(self):
+		return self.stock_abbr + " " + self.transaction_type + amount
