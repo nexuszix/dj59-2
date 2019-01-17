@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RawData, Update, MasterStock
+from .models import *
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources
 
@@ -41,6 +41,17 @@ class MasterAdmin(ImportExportModelAdmin):
 	list_display = ('stock_abbr', 'name')
 # # 	list_filter = ('province',)
 	search_fields = ['stock_abbr', 'name']		
+
+class UploadErrorLogResource(resources.ModelResource):
+	class Meta:
+		model = UploadErrorLog
+
+@admin.register(UploadErrorLog)
+class UploadErrorLogAdmin(ImportExportModelAdmin):
+	resource_class = UploadErrorLog
+	list_display = ('stock_abbr', 'director', 'stock_type', 'doc_date', 'amount', 'price', 'transaction_type',)
+# # 	list_filter = ('province',)
+	search_fields = ['stock_abbr__stock_abbr']		
 
 
 admin.site.site_header = "59-2 Administration System"
