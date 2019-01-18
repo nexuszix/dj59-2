@@ -1,8 +1,9 @@
-django==2.1.1
-django-import-export
+django>=2.1,<2.2
 setuptools
 requests
 wheel
 mysqlclient --only-binary :all:
+django-import-export
+djangorestframework
 
 
